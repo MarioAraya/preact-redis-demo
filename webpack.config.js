@@ -1,12 +1,12 @@
 module.exports = {
     devtool: 'source-map',
-    entry: './src/app',
+    entry: ['./src/app'],
     output: {
-        path: 'dist',
+        path: __dirname + '/dist',
         filename: 'bundle.js'
     },
     resolve: {
-        extensions: ['', '.ts', '.tsx']
+        extensions: ['.ts', '.tsx']
     },
     module: {
         loaders: [
