@@ -1,0 +1,32 @@
+{
+  "name": "preact-redis-demo",
+  "version": "1.0.0",
+  "description": "Work trial para AcidLabs. Usando Preact+Redis+Typescript+AWS",
+  "main": "app.js",
+  "dependencies": {
+    "preact": "^8.1.0",
+    "ts-loader": "^2.0.3",
+    "typescript": "^2.3.2",
+    "webpack": "^2.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://marioaraya@github.com/MarioAraya/preact-redis-demo.git"
+  },
+  "keywords": [
+    "preact",
+    "redis",
+    "typescript",
+    "aws"
+  ],
+  "author": "mario.araya.romero@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarioAraya/preact-redis-demo/issues"
+  },
+  "homepage": "https://github.com/MarioAraya/preact-redis-demo#readme"
+}
