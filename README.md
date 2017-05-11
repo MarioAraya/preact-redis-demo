@@ -11,6 +11,7 @@ Ejecutar comandos:
 - en otra terminal(consola) ejecutar: redis-cli
 
 Material usado:
+- [Redis instalación]('https://github.com/MSOpenTech/redis/releases')
 - [HelloWorld - Preact+Typescript+WebpackSimple]('https://medium.com/@shakyShane/hello-world-with-preact-jsx-typescript-6d70cf2ebf01')
 - Redis
 - Axios
