@@ -5,8 +5,16 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "mario.araya.romero@gmail.com",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.16.1",
+    "express": "^4.15.2",
+    "nodemon": "*",
+    "redis": "^2.7.1",
+    "request": "^2.81.0",
+    "typescript": "^2.3.2"
+  }
 }
