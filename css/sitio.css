@@ -1,0 +1,9 @@
+.container {
+    display: inline-grid;
+}
+
+.btn-primary {
+    width: 242px;
+    margin: 3px auto;
+    text-align: right;
+}

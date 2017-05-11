@@ -1,15 +1,14 @@
-import { h, render } from 'preact'
-import HelloWorld from './HelloWorld'
-import CityStats from './CityStats'
+import { h, render } from "preact";
+import HelloWorld from "./HelloWorld";
+import CityStats from "./CityStats";
 
 render(
-    //<HelloWorld name="World" />
-    <div>
+    <div class="container">
         <CityStats nombre="Santiago,CL" />
-        <CityStats nombre="Zurich,SW" placeholder="asd" />
-        <CityStats nombre="Auckland,NZ" placeholder="asd" />
-        <CityStats nombre="Sydney,AU" placeholder="asd" />
-        <CityStats nombre="London,UK" placeholder="asd" />
-        <CityStats nombre="Georgia,USA" placeholder="asd" />
+        <CityStats nombre="Zurich,SW" />
+        <CityStats nombre="Auckland,NZ" />
+        <CityStats nombre="Sydney,AU" />
+        <CityStats nombre="London,UK" />
+        <CityStats nombre="Georgia,USA" />
     </div>
-, document.querySelector('#app'))
+, document.querySelector("#app"));

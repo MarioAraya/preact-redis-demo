@@ -4,6 +4,7 @@
   "description": "Work trial para AcidLabs. Usando Preact+Redis+Typescript+AWS",
   "main": "app.js",
   "dependencies": {
+    "axios": "^0.16.1",
     "preact": "^8.1.0",
     "ts-loader": "^2.0.3",
     "typescript": "^2.3.2",
@@ -11,7 +12,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/webpack",
+    "start": "./node_modules/.bin/webpack"
   },
   "repository": {
     "type": "git",
