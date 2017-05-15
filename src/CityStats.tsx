@@ -5,39 +5,46 @@ const url: string = "http://localhost:5000";
 
 export interface ICityProps {
     nombre?: string;
-    lat?: number;  // from Google Maps API or REDIS
-    long?: number; // from Google Maps API or REDIS
-    temp?: string;   // from Forecast.io API
-    hour?: string; // from Forecast.io API
+}
+
+export interface ICityState {
+    temp: string;
+    hour: string;
+    lat: number;
+    lng: number;
 }
 
 export default class CityStats extends Component<ICityProps, any> {
     constructor() {
         super();
         this.state = {
-            nombre: "ASDF333",
-            temp: 3,
-            hour: "33:33",
-            lat: -33.555,
-            lng: 44.6654
+            nombre: "",
+            temp: 0,
+            hour: "00:00",
+            lat: 0,
+            lng: 0
         };
-        this.getStats = this.getStats.bind(this);
+        this.btnClick = this.btnClick.bind(this);
     }
-    getStats() {
-        console.log("getStats called!");
-        axios.get(url + "/api/redis/store").then((res) => {
+    btnClick(props) {
+        axios.get(url + "/api/redis/getLatLng/" + this.props.nombre).then((res) => {
+            console.log('getStats OK')
             this.setState({
-                nombre: "Peñaflor,CL",
-                temp: 3
+                nombre: this.props.nombre + " (ok)",
+                lat: res.data[0],
+                lng: res.data[1],
+                hour: "11:22"
             });
+            return res.data;
         }).catch((err) => {
-            console.error(err);
+            console.log('getStats ERROR: ' +err);
         });
     }
-    render (): any {
-        let { nombre, hour, temp } = this.state;
+    render (props): any {
+        let { nombre } = this.props;
+        let { hour, temp } = this.state;
         return (
-            <button class="btn btn-primary" type="button" onClick={this.getStats}> {nombre} 
+            <button class="btn btn-primary" type="button" onClick={this.btnClick}><p> {nombre} </p>
                 <span class="badge"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> { hour } - </span>
                 <span class="badge"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> { temp }°</span>
             </button>

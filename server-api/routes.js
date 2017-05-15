@@ -3,10 +3,14 @@ let router = express();
 let redis = require('redis')
 let axios = require('axios')
 let request = require('request')
+let cors = require('cors')
 
 const url = "http://localhost:5000";
 
 module.exports = function(app) {
+    // Cross Origin enabled
+    //app.use(cors());
+
     // Redis connect
     var redisClient = redis.createClient()
     redisClient.on('connect', function(err) {
@@ -16,23 +20,22 @@ module.exports = function(app) {
         console.log('error: ' + err)
     })
 
-    app.get('/api/redis/get-city/:ciudad', function(req, res, next) {
+    app.get('/api/redis/getLatLng/:ciudad', cors(), function(req, res, next) {
         redisClient.hgetall(req.params.ciudad, function(err, obj) {
             if (!obj) {
                 console.log('Ciudad no registrada en redis. Se procede a sacar data de GoogleMaps y guardarla en Redis.')
-                request.get(url + "/api/redis/store/" + req.params.ciudad, (error, response, body) => {
+                request.get(url + "/api/redis/getLatLngFromGoogle/" + req.params.ciudad, (error, response, body) => {
                     if (error) { return res.sendStatus(500); }
-                    return saveLatLngEnRedis(req.params.ciudad, body);
+                    saveLatLngEnRedis(req.params.ciudad, body);
                 });
             } else {
-                return getLatLngRedis(req.params.ciudad);
+                getLatLngRedis(req.params.ciudad, res);
             }
-            res.send(obj);
         });
     })
 
-    app.get('/api/redis/store/:ciudad', function(req, res) {
-        request.get(url + "/api/google-api/" + req.params.ciudad, (error, response, body) => {
+    app.get('/api/redis/getLatLngFromGoogle/:ciudad', cors(), function(req, res) {
+        return request.get(url + "/api/google-api/" + req.params.ciudad, (error, response, body) => {
             if (error) {
                 return res.sendStatus(500);
             }
@@ -42,16 +45,14 @@ module.exports = function(app) {
 
     // Obtiene coordenadas desde API google :ciudad string. ej:"Santiago,CL"
     app.get('/api/google-api/:ciudad', function(req, res) {
-        request.get({
-            url: 'https://maps.google.com/maps/api/geocode/json?key=AIzaSyAIDZiwD2-lgitBaK_HVsFZMMRjxCsKEug&address=' + req.params.ciudad,
-            json: true
-        }, function(error, response, body) {
+        console.log('getLatLng de google...' + req.params.ciudad)        
+        let urlGoogle = 'https://maps.google.com/maps/api/geocode/json?key=AIzaSyAIDZiwD2-lgitBaK_HVsFZMMRjxCsKEug&address=' + req.params.ciudad;
+        return request.get(urlGoogle, (error, response, body) => {
             if (error) {
-                console.log('Error al tratar de consumir API google. ' + error)
                 return res.sendStatus(500);
-            } else {
-                return res.status(200).send(body.results[0].geometry.location);
             }
+            console.log('Location from google:' + JSON.parse(body).results[0].geometry.location)
+            return res.send(JSON.parse(body).results[0].geometry.location)
         });
     })
 
@@ -67,11 +68,20 @@ module.exports = function(app) {
             'lng', JSON.parse(jsonLatLng).lng
         ], function(err, reply) {
             if (err) console.log('Error al tratar de guardar en Redis. ' + err)
+            console.log('Coordenadas correctamente guardadas en Redis. ' + reply)
             return reply;
         })
     }
 
-    getLatLngRedis = function(keyCiudad) {
-        return redisClient.hgetall(keyCiudad);
+    getLatLngRedis = function(keyCiudad, responseExpress) {
+        console.log('getLatLng de redis...')
+        redisClient.hgetall(keyCiudad, function(err, result){
+            if (err) {
+                console.log('getLanLng Error: ' +err)
+                return [];
+            }
+            console.log('getLatLng de redis...OK ' +[result.lat, result.lng])
+            responseExpress.json([result.lat, result.lng]);
+        });
     }
 }
