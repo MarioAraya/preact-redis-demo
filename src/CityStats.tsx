@@ -1,17 +1,11 @@
 import { h, Component } from "preact";
 import axios from "axios";
+import utils from "./util"
 
 const url: string = "http://localhost:5000";
 
 export interface ICityProps {
     nombre?: string;
-}
-
-export interface ICityState {
-    temp: string;
-    hour: string;
-    lat: number;
-    lng: number;
 }
 
 export default class CityStats extends Component<ICityProps, any> {
@@ -22,31 +16,38 @@ export default class CityStats extends Component<ICityProps, any> {
             temp: 0,
             hour: "00:00",
             lat: 0,
-            lng: 0
+            lng: 0,
+            summ: "",
+            icon: ""
         };
         this.btnClick = this.btnClick.bind(this);
     }
     btnClick(props) {
         axios.get(url + "/api/redis/getLatLng/" + this.props.nombre).then((res) => {
             console.log('getStats OK')
-            this.setState({
-                nombre: this.props.nombre + " (ok)",
-                lat: res.data[0],
-                lng: res.data[1],
-                hour: "11:22"
-            });
-            return res.data;
+            axios.get(url +'/api/forecast/getTimeTemp/' + res.data[0] +"/" +res.data[1])
+            .then((resForecast) => {
+                console.log('/forecast.IO ... OK', resForecast.data) 
+                this.setState({
+                    hour: utils.getHourTimezone(resForecast.data.time, resForecast.data.offset),
+                    temp: resForecast.data.temp,
+                    summ: resForecast.data.summ,
+                    icon: utils.getIconUrlForecastIO(resForecast.data.icon)
+                });
+                return resForecast.data;                
+            })
         }).catch((err) => {
             console.log('getStats ERROR: ' +err);
         });
     }
     render (props): any {
         let { nombre } = this.props;
-        let { hour, temp } = this.state;
+        let { hour, temp, icon, summ } = this.state;
         return (
-            <button class="btn btn-primary" type="button" onClick={this.btnClick}><p> {nombre} </p>
-                <span class="badge"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> { hour } - </span>
-                <span class="badge"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> { temp }°</span>
+            <button class="btn btn-primary btnForecast" type="button" onClick={this.btnClick}>
+                <img src={ icon } alt={ summ } width="60"/> { nombre } &nbsp;
+                <span class="badge"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> { hour }</span> &nbsp;
+                <span class="badge"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> { temp }°</span>                
             </button>
         );
     }
