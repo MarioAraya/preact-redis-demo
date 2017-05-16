@@ -4,6 +4,7 @@ let redis = require('redis')
 let axios = require('axios')
 let request = require('request')
 let cors = require('cors')
+let routesMethods = require('./routes-methods.js')
 
 const url = "http://localhost:5000";
 
@@ -11,27 +12,10 @@ module.exports = function(app) {
     // Cross Origin enabled
     //app.use(cors());
 
-    // Redis connect
-    var redisClient = redis.createClient()
-    redisClient.on('connect', function(err) {
-        console.log('Redis connected...')
-    })
-    redisClient.on('error', function(err) {
-        console.log('error: ' + err)
-    })
+    routesMethods.redisConnect();
 
     app.get('/api/redis/getLatLng/:ciudad', cors(), function(req, res, next) {
-        redisClient.hgetall(req.params.ciudad, function(err, obj) {
-            if (!obj) {
-                console.log('Ciudad no registrada en redis. Se procede a sacar data de GoogleMaps y guardarla en Redis.')
-                request.get(url + "/api/redis/getLatLngFromGoogle/" + req.params.ciudad, (error, response, body) => {
-                    if (error) { return res.sendStatus(500); }
-                    saveLatLngEnRedis(req.params.ciudad, body);
-                });
-            } else {
-                getLatLngRedis(req.params.ciudad, res);
-            }
-        });
+        routesMethods.redisGetLatLng(req.params.ciudad, res)
     })
 
     app.get('/api/redis/getLatLngFromGoogle/:ciudad', cors(), function(req, res) {
@@ -39,7 +23,7 @@ module.exports = function(app) {
             if (error) {
                 return res.sendStatus(500);
             }
-            return saveLatLngEnRedis(req.params.ciudad, body);
+            return routesMethods.saveLatLngEnRedis(req.params.ciudad, body);
         });
     })
 
@@ -56,32 +40,28 @@ module.exports = function(app) {
         });
     })
 
+    app.get('/api/forecast/getTimeTemp/:lat/:lng', cors(), function(req, res){
+        let urlForecastIO = 'https://api.darksky.net/forecast/a2c2a01fb210cf7c611301c9fa23cdee/' 
+                            +req.params.lat +',' +req.params.lng +'?exclude=minutely,hourly,daily,alerts,flags&lang=es&units=auto';
+        return request.get(urlForecastIO, (error, response, body) => {
+            if (error) {
+                return res.sendStatus(500);
+            }
+            let resObj = JSON.parse(body);
+            let responseForecast = {
+                time: resObj.currently.time,
+                temp: resObj.currently.temperature,
+                summ: resObj.currently.summary,
+                icon: resObj.currently.icon,
+                offset: resObj.offset
+            }
+            console.log('Data from forecast.IO ... OK')
+            return res.send(responseForecast)
+        })
+    })
+
     // Raiz
     app.get('/', function(req, res) {
         res.send('API root /')
     })
-
-    // Guardar en redis: HMSET Ciudad,[lat,lng]
-    saveLatLngEnRedis = function(keyCiudad, jsonLatLng) {
-        redisClient.hmset(keyCiudad, [
-            'lat', JSON.parse(jsonLatLng).lat,
-            'lng', JSON.parse(jsonLatLng).lng
-        ], function(err, reply) {
-            if (err) console.log('Error al tratar de guardar en Redis. ' + err)
-            console.log('Coordenadas correctamente guardadas en Redis. ' + reply)
-            return reply;
-        })
-    }
-
-    getLatLngRedis = function(keyCiudad, responseExpress) {
-        console.log('getLatLng de redis...')
-        redisClient.hgetall(keyCiudad, function(err, result){
-            if (err) {
-                console.log('getLanLng Error: ' +err)
-                return [];
-            }
-            console.log('getLatLng de redis...OK ' +[result.lat, result.lng])
-            responseExpress.json([result.lat, result.lng]);
-        });
-    }
 }
