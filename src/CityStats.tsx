@@ -44,10 +44,14 @@ export default class CityStats extends Component<ICityProps, any> {
         let { nombre } = this.props;
         let { hour, temp, icon, summ } = this.state;
         return (
-            <button class="btn btn-primary btnForecast" type="button" onClick={this.btnClick}>
-                <img src={ icon } alt={ summ } width="60"/> { nombre } &nbsp;
-                <span class="badge"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> { hour }</span> &nbsp;
-                <span class="badge"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> { temp }°</span>                
+            <button class="btnForecast btn btn-primary" type="button" onClick={this.btnClick}>
+                <div class="icon">
+                    <img src={ icon } alt={ summ } width="60"/> <span>{ nombre }</span>                    
+                </div>
+                <div class="badge1">
+                    <span class="badge"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> { hour }</span> &nbsp;
+                    <span class="badge"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> { temp }°</span>                                    
+                </div>
             </button>
         );
     }
