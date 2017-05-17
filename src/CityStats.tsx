@@ -12,20 +12,19 @@ export default class CityStats extends Component<ICityProps, any> {
     constructor() {
         super();
         this.state = {
-            nombre: "",
             temp: 0,
             hour: "00:00",
-            lat: 0,
-            lng: 0,
             summ: "",
-            icon: ""
+            icon: "",
+            error: ""
         };
         this.btnClick = this.btnClick.bind(this);
     }
+    
     btnClick(props) {
         axios.get(url + "/api/redis/getLatLng/" + this.props.nombre).then((res) => {
-            console.log('getStats OK')
-            axios.get(url +'/api/forecast/getTimeTemp/' + res.data[0] +"/" +res.data[1])
+            console.log(`getStats OK nombre=${this.props.nombre} lat=${res.data.lat} lng=${res.data.lng}`)
+            axios.get(url +'/api/forecast/getTimeTemp/' + res.data.lat +"/" +res.data.lng)
             .then((resForecast) => {
                 console.log('/forecast.IO ... OK', resForecast.data) 
                 this.setState({
@@ -35,11 +34,15 @@ export default class CityStats extends Component<ICityProps, any> {
                     icon: utils.getIconUrlForecastIO(resForecast.data.icon)
                 });
                 return resForecast.data;                
-            })
+            }).catch((err) => {
+                console.log('Error en /api/forecast/getTimeTemp/ : ' +err);
+                this.setState({error: err})
+            });
         }).catch((err) => {
-            console.log('getStats ERROR: ' +err);
+            console.log('Error en /api/redis/getLatLng/ : ' +err);
         });
     }
+
     render (props): any {
         let { nombre } = this.props;
         let { hour, temp, icon, summ } = this.state;
