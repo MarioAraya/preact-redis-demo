@@ -1,7 +1,6 @@
 let express = require('express')
 let router = express();
 let redis = require('redis')
-let axios = require('axios')
 let request = require('request')
 let cors = require('cors')
 let routesMethods = require('./routes-methods.js')

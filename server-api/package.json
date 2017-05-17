@@ -10,7 +10,6 @@
   "author": "mario.araya.romero@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.16.1",
     "cors": "^2.8.3",
     "express": "^4.15.2",
     "nodemon": "*",
