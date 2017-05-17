@@ -1,8 +1,8 @@
 let redis = require('redis')
 let request = require('request')
 
-// Redis connect
-var redisClient = redis.createClient()
+// Redis createClient & connect to Redis Labs free account
+var redisClient = redis.createClient(19812, "redis-19812.c10.us-east-1-4.ec2.cloud.redislabs.com");
 
 exports.redisConnect = function(){
     redisClient.on('connect', function(err) {
@@ -13,48 +13,62 @@ exports.redisConnect = function(){
     })
 }
 
+// Primer request del flujo, obtiene [Lat,Lng] desde google o desde redis
 exports.redisGetLatLng = function(ciudad, responseExpress) {
+    let self = this
     redisClient.hgetall(ciudad, function(err, obj) {
         if (!obj) {
-            console.log('Ciudad no registrada en redis. Se procede a sacar data de GoogleMaps y guardarla en Redis.')
-            request.get(url + "/api/googlemaps/getLatLng" + ciudad, (error, response, body) => {
+            console.log('Ciudad no registrada en redis. Se obtendrá de GoogleMaps para guardarla luego en la cache Redis.')
+            request.get("http://localhost:5000/api/googlemaps/getLatLng/" + ciudad, (error, response, body) => {
+                console.log('redisGetLatLng OK: ' +JSON.parse(body).lat)
                 if (error) { return res.sendStatus(500); }
-                saveLatLngEnRedis(ciudad, body);
-            });
+                self.saveLatLngEnRedis(ciudad, body, responseExpress);
+            }); 
         } else {
-            getLatLngRedis(ciudad, responseExpress);
+            self.getLatLngRedis(ciudad, responseExpress);
         }
     });
 }
 
 // Guardar en redis: HMSET Ciudad,[lat,lng]
-let saveLatLngEnRedis = function(keyCiudad, jsonLatLng) {
-    redisClient.hmset(keyCiudad, [
+exports.saveLatLngEnRedis = function(keyCiudad, jsonLatLng, responseExpress) {
+    console.log('saveLatLngEnRedis: ' + jsonLatLng)    
+    let objLatLng = [
         'lat', JSON.parse(jsonLatLng).lat,
         'lng', JSON.parse(jsonLatLng).lng
-    ], function(err, reply) {
-        if (err) console.log('Error al tratar de guardar en Redis. ' + err)
+    ]
+    redisClient.hmset(keyCiudad, objLatLng, function(err, reply) {
+        if (err) {
+            console.log('Error al tratar de guardar en Redis. ' + err)
+            throw new Error('Error al tratar de guardar en Redis: ' +err)
+        }
         console.log('Coordenadas correctamente guardadas en Redis. ' + reply)
-        return reply;
+        responseExpress.json(JSON.parse(jsonLatLng))        
+        return reply
     })
 }
 
-// Obtiene LatLng de redis y retorna la response [lat, lng]
-let getLatLngRedis = function(keyCiudad, responseExpress) {
-    console.log('getLatLng de redis...')
+// Obtiene LatLng de redis y retorna la response [lat, lng]  
+exports.getLatLngRedis = function(keyCiudad, responseExpress) {
+    console.log('getLatLng de redis...' +keyCiudad)
     redisClient.hgetall(keyCiudad, function(err, result){
-        if (err) {
+        if (err) { 
             console.log('getLanLng Error: ' +err)
             return [];
         }
-        console.log('getLatLng de redis...OK ' +[result.lat, result.lng])
-        responseExpress.send([result.lat, result.lng]);
+        let objLatLng = {
+            'lat': result.lat,
+            'lng': result.lng
+        }
+        console.log('getLatLng de redis...OK ' +objLatLng)
+        responseExpress.json(objLatLng);
     });
 }
 
 exports.getDataForecast = function(urlForecastIO, responseExpress) {
+    console.log('getDataForecast url=' +urlForecastIO) 
     // Randomize 10% request will fail
-    if (Math.random(0, 1) < 0.5) 
+    if (Math.random(0, 1) < 0.1)
         throw new Error('How unfortunate! The API Request Failed')
 
     // Normal flow ( 90% )
@@ -75,12 +89,12 @@ exports.getDataForecast = function(urlForecastIO, responseExpress) {
     })
 }
 
-exports.redisSaveError = function(msg){
+exports.redisSaveError = function(msg, responseExpress){
     redisClient.hmset("api.errors", [
         new Date(), msg
     ], function(err, reply) {
         if (err) console.log('Error al tratar de guardar en Redis. ' + err)
-        console.log('...Error! logeado en Redis: ' + reply)
-        return reply;
+        console.log('...Error! logeado en Redis: ' + msg)
+        responseExpress.sendStatus(500)
     })
 }
