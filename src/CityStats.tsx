@@ -49,7 +49,8 @@ export default class CityStats extends Component<ICityProps, any> {
         return (
             <button class="btnForecast btn btn-primary" type="button" onClick={this.btnClick}>
                 <div class="icon">
-                    <img src={ icon } alt={ summ } width="60"/> <span>{ nombre }</span>                    
+                    { icon!=="" && <img src={ icon } alt={ summ } width="60" /> }
+                    <span>{ nombre }</span>
                 </div>
                 <div class="badge1">
                     <span class="badge"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> { hour }</span> &nbsp;
