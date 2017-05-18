@@ -19,3 +19,5 @@ Material usado:
 - [Redis Labs](https://redislabs.com)  - Para usar instancia en la nube de Redis
 - Axios - Para request en frontend
 - Express - Para API backend
+- Documentación API [Forecast.IO](https://darksky.net/dev/docs)
+- Documentación API [Google Geocode](https://developers.google.com/maps/documentation/geocoding/start)
