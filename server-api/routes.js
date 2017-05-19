@@ -36,7 +36,8 @@ module.exports = function(app) {
 
     // Raiz
     app.get('/', function(req, res) {
-        res.send('API root /')
+        console.log('hola')
+        res.send('hola index') 
     })
 
     // Maneja errores de express genericos. 
