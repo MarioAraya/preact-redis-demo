@@ -8,13 +8,18 @@
     "preact": "^8.1.0",
     "ts-loader": "^2.0.3",
     "typescript": "^2.3.2",
-    "webpack": "^2.5.0"
+    "webpack": "^2.5.0",
+    "cors": "^2.8.3",
+    "express": "^4.15.2",
+    "nodemon": "*",
+    "redis": "^2.7.1",
+    "request": "^2.81.0"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./node_modules/.bin/webpack",
-    "start": "./node_modules/.bin/webpack"
+    "start": "./node_modules/.bin/webpack && nodemon server.js"
   },
   "repository": {
     "type": "git",

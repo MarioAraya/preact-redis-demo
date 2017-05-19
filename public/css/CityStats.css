@@ -1,0 +1,27 @@
+.btnForecast {
+    min-width: 364px;
+    margin: 5px;
+    text-align: right;
+    position: relative;
+}
+
+.btnForecast img {
+    min-height: 60px;    
+}
+
+.btnForecast span {
+    font-size: 19px;
+}
+
+.btnForecast .glyphicon {
+    font-size: 19px;
+    color: #000;
+}
+
+.btnForecast span.badge {
+    min-width: 100px;
+}
+
+.btnForecast img {
+    float: left;
+}

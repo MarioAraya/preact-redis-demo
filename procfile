@@ -1,2 +1,1 @@
 web: npm start
-server: cd server-api/ && npm start
