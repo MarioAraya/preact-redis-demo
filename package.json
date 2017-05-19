@@ -2,7 +2,7 @@
   "name": "preact-redis-demo",
   "version": "1.0.0",
   "description": "Work trial para AcidLabs. Usando Preact+Redis+Typescript+AWS",
-  "main": "app.js",
+  "main": "server.js",
   "dependencies": {
     "axios": "^0.16.1",
     "preact": "^8.1.0",
