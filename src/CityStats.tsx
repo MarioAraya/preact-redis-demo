@@ -3,7 +3,7 @@ import axios from "axios";
 import utils from "./util"
 
 //const url: string = "https://localhost:5000";
-const url: string = "https://cryptic-retreat-74751.herokuapp.com/";
+const url: string = "https://cryptic-retreat-74751.herokuapp.com";
 
 export interface ICityProps {
     nombre?: string;

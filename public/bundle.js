@@ -4249,7 +4249,7 @@ var preact_1 = __webpack_require__(7);
 var axios_1 = __webpack_require__(10);
 var util_1 = __webpack_require__(33);
 //const url: string = "https://localhost:5000";
-var url = "https://cryptic-retreat-74751.herokuapp.com/";
+var url = "https://cryptic-retreat-74751.herokuapp.com";
 var CityStats = (function (_super) {
     __extends(CityStats, _super);
     function CityStats() {
