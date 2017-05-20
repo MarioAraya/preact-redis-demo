@@ -19,7 +19,7 @@ export default class CityStats extends Component<ICityProps, any> {
             icon: "",
             error: ""
         };
-        this.btnClick = (this);
+        this.btnClick = this.btnClick.bind(this);
     }
     
     btnClick(props) {
