@@ -19,7 +19,8 @@
   "scripts": {
     "prepublish": "npm i",
     "build": "./node_modules/.bin/webpack",
-    "start": "node index.js"
+    "start": "node index.js",
+    "postinstall": "./node_modules/.bin/webpack"
   },
   "repository": {
     "type": "git",
