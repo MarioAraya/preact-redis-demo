@@ -8,7 +8,7 @@
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/ 		} 
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -4248,7 +4248,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var preact_1 = __webpack_require__(7);
 var axios_1 = __webpack_require__(10);
 var util_1 = __webpack_require__(33);
-var url = "http://localhost:5000";
+//const url: string = "https://localhost:5000";
+var url = "https://cryptic-retreat-74751.herokuapp.com/";
 var CityStats = (function (_super) {
     __extends(CityStats, _super);
     function CityStats() {

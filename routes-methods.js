@@ -19,7 +19,7 @@ exports.redisGetLatLng = function(ciudad, responseExpress) {
     redisClient.hgetall(ciudad, function(err, obj) {
         if (!obj) {
             console.log('Ciudad no registrada en redis. Se obtendrá de GoogleMaps para guardarla luego en la cache Redis.')
-            request.get("//localhost:5000/api/googlemaps/getLatLng/" + ciudad, (error, response, body) => {
+            request.get("https://cryptic-retreat-74751.herokuapp.com/api/googlemaps/getLatLng/" + ciudad, (error, response, body) => {
                 console.log('redisGetLatLng OK: ' +JSON.parse(body).lat)
                 if (error) { return res.sendStatus(500); }
                 self.saveLatLngEnRedis(ciudad, body, responseExpress);
