@@ -2,7 +2,7 @@ import { h, Component } from "preact";
 import axios from "axios";
 import utils from "./util"
 
-const url: string = "http://localhost:5000";
+const url: string = "//localhost:5000";
 
 export interface ICityProps {
     nombre?: string;
