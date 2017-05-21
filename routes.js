@@ -17,7 +17,7 @@ module.exports = function(app) {
     // Request googleAPI que retorna coordenadas y las guarda en Redis
     app.get('/api/googlemaps/getLatLng/:ciudad', cors(), function(req, res) {
         console.log('getLatLng from google...' + req.params.ciudad)        
-        let urlGoogle = '//maps.google.com/maps/api/geocode/json?key=AIzaSyAIDZiwD2-lgitBaK_HVsFZMMRjxCsKEug&address=' + req.params.ciudad;
+        let urlGoogle = 'https://maps.google.com/maps/api/geocode/json?key=AIzaSyAIDZiwD2-lgitBaK_HVsFZMMRjxCsKEug&address=' + req.params.ciudad;
         return request.get(urlGoogle, (error, response, body) => {
             if (error) {
                 console.log('Error en /api/googlemaps/getLatLng/ : ' +error)
@@ -30,7 +30,7 @@ module.exports = function(app) {
 
     // Obtiene data (hora, temp, etc) desde API de forecast.IO, filtra resultados a solo los necesarios y en español
     app.get('/api/forecast/getTimeTemp/:lat/:lng', cors(), function(req, responseExpress){
-        let urlForecastIO = '//api.darksky.net/forecast/a2c2a01fb210cf7c611301c9fa23cdee/' 
+        let urlForecastIO = 'https://api.darksky.net/forecast/a2c2a01fb210cf7c611301c9fa23cdee/' 
                             +req.params.lat +',' +req.params.lng +'?exclude=minutely,hourly,daily,alerts,flags&lang=es&units=auto';
         return routesMethods.getDataForecast(urlForecastIO, responseExpress)
     })
