@@ -4248,8 +4248,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var preact_1 = __webpack_require__(7);
 var axios_1 = __webpack_require__(10);
 var util_1 = __webpack_require__(33);
-//const url: string = "https://localhost:5000";
-var url = "https://cryptic-retreat-74751.herokuapp.com";
+var url = "//localhost:5000";
 var CityStats = (function (_super) {
     __extends(CityStats, _super);
     function CityStats() {
@@ -4320,17 +4319,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
     getIconUrlForecastIO: function (icon) {
         switch (icon) {
-            case 'clear-day': return 'http://i.imgur.com/cJDNw72.png';
-            case 'clear-night': return 'http://i.imgur.com/Oxt9Dn8.png';
-            case 'clear-cloudy': return 'http://i.imgur.com/cJDNw72.png';
-            case 'cloudy': return 'http://i.imgur.com/JRRriGY.png';
-            case 'clear-fog': return 'http://i.imgur.com/AwxIK0H.png';
-            case 'partly-cloudy-day': return 'http://i.imgur.com/JRRriGY.png';
-            case 'partly-cloudy-night': return 'http://i.imgur.com/uNE3UsV.png';
-            case 'rain': return 'http://i.imgur.com/Ni14lLx.png';
-            case 'sleet': return 'http://i.imgur.com/Uuok6UO.png';
-            case 'snow': return 'http://i.imgur.com/0BHwVWb.png';
-            case 'wind': return 'http://i.imgur.com/vNlETtj.png';
+            case 'clear-day': return 'https://i.imgur.com/cJDNw72.png';
+            case 'clear-night': return 'https://i.imgur.com/Oxt9Dn8.png';
+            case 'clear-cloudy': return 'https://i.imgur.com/cJDNw72.png';
+            case 'cloudy': return 'https://i.imgur.com/JRRriGY.png';
+            case 'clear-fog': return 'https://i.imgur.com/AwxIK0H.png';
+            case 'partly-cloudy-day': return 'https://i.imgur.com/JRRriGY.png';
+            case 'partly-cloudy-night': return 'https://i.imgur.com/uNE3UsV.png';
+            case 'rain': return 'https://i.imgur.com/Ni14lLx.png';
+            case 'sleet': return 'https://i.imgur.com/Uuok6UO.png';
+            case 'snow': return 'https://i.imgur.com/0BHwVWb.png';
+            case 'wind': return 'https://i.imgur.com/vNlETtj.png';
         }
         return '';
     },
