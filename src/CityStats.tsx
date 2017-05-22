@@ -1,10 +1,6 @@
 import { h, Component } from "preact";
 import axios from "axios";
 import utils from "./util"
-import process from 'process'
-
-const url: string = "//localhost:41072";
-//const url: string = "https://cryptic-retreat-74751.herokuapp.com";
 
 export interface ICityProps {
     nombre?: string;
@@ -24,9 +20,9 @@ export default class CityStats extends Component<ICityProps, any> {
     }
     
     btnClick(props) {
-        axios.get(url + "/api/redis/getLatLng/" + this.props.nombre).then((res) => {
+        axios.get("/api/redis/getLatLng/" + this.props.nombre).then((res) => {
             console.log(`getStats OK nombre=${this.props.nombre} lat=${res.data.lat} lng=${res.data.lng}`)
-            axios.get(url +'/api/forecast/getTimeTemp/' + res.data.lat +"/" +res.data.lng)
+            axios.get('/api/forecast/getTimeTemp/' + res.data.lat +"/" +res.data.lng)
             .then((resForecast) => {
                 console.log('/forecast.IO ... OK', resForecast.data) 
                 this.setState({
