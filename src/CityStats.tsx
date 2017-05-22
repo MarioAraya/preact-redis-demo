@@ -26,12 +26,12 @@ export default class CityStats extends Component<ICityProps, any> {
             .then((resForecast) => {
                 console.log('/forecast.IO ... OK', resForecast.data) 
                 this.setState({
-                    hour: utils.getHourTimezone(resForecast.data.time, resForecast.data.offset),
+                    hour: utils.getHourTimezone(resForecast.data.offset),
                     temp: resForecast.data.temp,
                     summ: resForecast.data.summ,
                     icon: utils.getIconUrlForecastIO(resForecast.data.icon)
                 });
-                return resForecast.data;                
+                //return resForecast.data;                
             }).catch((err) => {
                 console.log('Error en /api/forecast/getTimeTemp/ : ' +err);
                 this.setState({error: err})

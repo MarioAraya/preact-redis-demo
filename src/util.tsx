@@ -1,3 +1,5 @@
+import moment from "moment-timezone";
+
 export default {
     getIconUrlForecastIO: function(icon){
         switch (icon) {
@@ -15,10 +17,14 @@ export default {
         }
         return ''
     },
-    getHourTimezone(tiempoInt, offset){
-        let date = new Date(tiempoInt + offset * 3600 * 1000).toUTCString().replace( / GMT$/, "" )
-        let dateHora = date.substring(date.indexOf(':')-2) // Extrae solo la hora
-        console.log(`getHourTimezone(${dateHora} , ${offset}) ... `)
-        return dateHora;
-    }
+    getHourTimezoneMomentTz: function(city) {
+        return moment().tz(city).format("HH:mm");
+    },
+    getHourTimezone(offset) {
+        /** from: http://stackoverflow.com/questions/8207655/how-to-get-time-of-specific-timezone-using-javascript */        
+        var d = new Date();
+        var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+        var nd = new Date(utc + (3600000*offset)).toLocaleString();
+        return nd.substring(nd.indexOf(':')-2)
+    }   
 }

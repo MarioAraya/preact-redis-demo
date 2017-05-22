@@ -79,6 +79,7 @@ exports.getDataForecast = function(urlForecastIO, responseExpress) {
         }
         let resObj = JSON.parse(body);
         let responseForecast = {
+            tzone: resObj.timezone,
             time: resObj.currently.time,
             temp: resObj.currently.temperature,
             summ: resObj.currently.summary,
