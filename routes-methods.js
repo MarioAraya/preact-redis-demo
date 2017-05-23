@@ -1,8 +1,9 @@
 let redis = require('redis')
 let request = require('request')
+let config = require('./config.json')
 
 // Redis createClient & connect to Redis Labs free account
-var redisClient = redis.createClient(19812, "redis-19812.c10.us-east-1-4.ec2.cloud.redislabs.com");
+var redisClient = redis.createClient(config.redis.port, config.redis.host);
 
 exports.redisConnect = function(){
     redisClient.on('connect', function(err) {
@@ -66,15 +67,17 @@ exports.getLatLngRedis = function(keyCiudad, responseExpress) {
 }
 
 exports.getDataForecast = function(urlForecastIO, responseExpress) {
-    console.log('getDataForecast url=' +urlForecastIO) 
     // Randomize 10% request will fail
-    if (Math.random(0, 1) < 0.1)
-        throw new Error('How unfortunate! The API Request Failed')
+    if (Math.random(0, 1) < 0.1){
+        console.log('getDataForecast Error random')
+        throw new Error('How unfortunate! The API Request Failed')        
+    }
 
+    console.log('getDataForecast OK') 
     // Normal flow ( 90% )
     return request.get(urlForecastIO, (error, response, body) => {
         if (error) {
-            console.log('Error en API getDataForecast(): '+error)
+            console.log('getDataForecast Error en API: '+error)
             return responseExpress.sendStatus(500).send(error);
         }
         let resObj = JSON.parse(body);
@@ -86,7 +89,7 @@ exports.getDataForecast = function(urlForecastIO, responseExpress) {
             icon: resObj.currently.icon,
             offset: resObj.offset
         }
-        console.log('Data from forecast.IO ... OK')            
+        console.log('getDataForecast ... response OK')            
         return responseExpress.send(responseForecast)
     })
 }

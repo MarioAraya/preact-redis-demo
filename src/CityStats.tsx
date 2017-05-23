@@ -30,8 +30,7 @@ export default class CityStats extends Component<ICityProps, any> {
                     temp: resForecast.data.temp,
                     summ: resForecast.data.summ,
                     icon: utils.getIconUrlForecastIO(resForecast.data.icon)
-                });
-                //return resForecast.data;                
+                });             
             }).catch((err) => {
                 console.log('Error en /api/forecast/getTimeTemp/ : ' +err);
                 this.setState({error: err})
