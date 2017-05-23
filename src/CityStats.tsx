@@ -7,16 +7,19 @@ export interface ICityProps {
 }
 
 export default class CityStats extends Component<ICityProps, any> {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             temp: 0,
             hour: "00:00",
             summ: "",
-            icon: "",
+            icon: "images/loading.svg",
             error: ""
         };
         this.btnClick = this.btnClick.bind(this);
+
+        // Se hace click automáticamente al instanciar el componente
+        this.btnClick(this.props.nombre);
     }
     
     btnClick(props) {

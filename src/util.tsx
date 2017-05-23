@@ -14,6 +14,7 @@ export default {
             case 'sleet': return 'https://i.imgur.com/Uuok6UO.png'
             case 'snow': return 'https://i.imgur.com/0BHwVWb.png'
             case 'wind': return 'https://i.imgur.com/vNlETtj.png'
+            case 'loading': return 'images/loading.svg'            
         }
         return ''
     },
