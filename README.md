@@ -1,4 +1,4 @@
-Esta app muestra un componente renderizado con Preact, y que al clickearlo consume la api de googlemaps en primera instancia y en las posteriores lee desde redis, luego con la data obtenida consume api de Forecast.io para obtener temperatura actual de la ciudad consultada y datos como la hroa actual. La hroa será calculada a partir del Timezone que retorne Forecast.io
+Esta app muestra un componente renderizado con Preact, y que al clickearlo consume la api de googlemaps en primera instancia y en las posteriores lee desde redis, luego con la data obtenida consume api de Forecast.io para obtener la hora exacta y pronóstico del tiempo.
 
 # Como levantar proyecto
 
