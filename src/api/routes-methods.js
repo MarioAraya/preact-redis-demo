@@ -7,18 +7,26 @@ var redisClient = redis.createClient(config.redis.port, config.redis.host);
 
 exports.redisConnect = function(){
     redisClient.on('connect', function(err) {
+        if(err) console.log('_redisConnect() error_ :', err)
         console.log('Redis connected...')
     })
     redisClient.on('error', function(err) {
+        if(err) console.log('_redis error_ :', err)        
         console.log('Redis error: ' + err)
     })
 }
 
 // Primer request del flujo, obtiene [Lat,Lng] desde google o desde redis
 exports.redisGetLatLng = function(ciudad, responseExpress) {
+    console.log('redisGetLatLng() called !')
+    
     let self = this
     redisClient.hgetall(ciudad, function(err, obj) {
-        if (!obj) {
+        if (err) {
+            console.log('redisGetLatLng() err', err)
+            return err
+        }
+        else if (!obj) {
             console.log('Ciudad no registrada en redis. Se obtendrá de GoogleMaps para guardarla luego en la cache Redis.')
             request.get("/api/googlemaps/getLatLng/" + ciudad, (error, response, body) => {
                 console.log('redisGetLatLng OK: ' +JSON.parse(body).lat)
@@ -95,6 +103,7 @@ exports.getDataForecast = function(urlForecastIO, responseExpress) {
 }
 
 exports.redisSaveError = function(msg, responseExpress){
+    console.log('redisSaveError')
     redisClient.hmset("api.errors", [
         new Date(), msg
     ], function(err, reply) {

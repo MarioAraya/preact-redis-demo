@@ -40,12 +40,13 @@ module.exports = function(app) {
     app.use(express.static('dist'))
 
     app.get('/', function(req, res) {
-        res.sendFile(path.join(__dirname + '/index.html'));
+        res.sendFile(path.join(__dirname.replace('src/api', 'index.html')));
     });
 
 
     // Maneja errores de express genericos. 
     app.use(function logErrors (err, req, responseExpress, next) {
+        console.log('Error logged: ', err)
         let esTipoErrorRandom = err.message.indexOf('How unfortunate') >= 0;
         if (esTipoErrorRandom) routesMethods.redisSaveError(err.message, responseExpress);
     })
