@@ -10,6 +10,7 @@
     "moment-timezone": "^0.5.13",
     "nodemon": "*",
     "preact": "^8.1.0",
+    "react": "^16.1.1",
     "redis": "^2.7.1",
     "request": "^2.81.0",
     "ts-loader": "^2.0.3",
@@ -20,7 +21,7 @@
   "scripts": {
     "prepublish": "npm i",
     "build": "./node_modules/.bin/webpack",
-    "start": "node index.js",
+    "start": "node src/api/index.js",
     "postinstall": "./node_modules/.bin/webpack"
   },
   "repository": {
