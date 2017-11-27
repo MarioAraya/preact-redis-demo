@@ -17,12 +17,19 @@
     "typescript": "^2.3.2",
     "webpack": "^2.5.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/chai": "^4.0.5",
+    "@types/mocha": "^2.2.44",
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "ts-node": "^3.3.0"
+  },
   "scripts": {
     "prepublish": "npm i",
     "build": "./node_modules/.bin/webpack",
     "start": "node src/api/index.js",
-    "postinstall": "./node_modules/.bin/webpack"
+    "postinstall": "./node_modules/.bin/webpack",
+    "test": "mocha --compilers ts:ts-node/register"
   },
   "repository": {
     "type": "git",

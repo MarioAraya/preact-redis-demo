@@ -1,5 +1,5 @@
 import { h, render } from "preact";
-import CityStats from "./CityStats";
+import CityStats from "./components/CityStats";
 
 render(
     <div class="container">
