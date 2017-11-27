@@ -1,13 +1,9 @@
 import { h, Component } from "preact";
-import axios from "axios";
-import utils from "./util"
+import methods from '../methods'
 
 export interface ICityProps {
     nombre?: string;
 }
-
-const httpClient = axios.create();
-httpClient.defaults.timeout = 5000;
 
 export default class CityStats extends Component<ICityProps, any> {
     constructor(props) {
@@ -26,34 +22,7 @@ export default class CityStats extends Component<ICityProps, any> {
     }
     
     btnClick(props) {
-        this.getDataCiudad(this.props.nombre)
-    }
-
-    // lat Lng from redis
-    private getDataCiudad(ciudad: string) {
-        return httpClient.get("/api/redis/getLatLng/" + ciudad).then( res => {
-                console.log(`getStats OK nombre=${ciudad} lat=${res.data.lat} lng=${res.data.lng}`)
-                this.getForecast(res.data)
-            }).catch(
-                err => console.log('Error en /api/redis/getLatLng/ : ' +err)
-            )
-    }
-
-    // Forecast info from forecast.io
-    private getForecast(data) {
-        return httpClient.get('/api/forecast/getTimeTemp/' + data.lat +"/" + data.lng)
-            .then( resForecast => {
-                console.log('/forecast.IO ... OK', resForecast.data) 
-                this.setState({
-                    hour: utils.getHourTimezone(resForecast.data.offset),
-                    temp: resForecast.data.temp,
-                    summ: resForecast.data.summ,
-                    icon: utils.getIconUrlForecastIO(resForecast.data.icon)
-                });             
-            }).catch( err => {
-                console.log('Error en /api/forecast/getTimeTemp/ : ' +err);
-                this.setState({error: err})
-            });
+        methods.getDataCiudad(this.props.nombre)
     }
 
     render (props): any {

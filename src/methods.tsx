@@ -1,4 +1,10 @@
 import moment from "moment-timezone";
+import axios from "axios";
+
+const httpClient = axios.create({
+    timeout: 2500,
+    headers: { Accept: 'application/json' }  
+})
 
 export default {
     getIconUrlForecastIO: function(icon){
@@ -15,16 +21,41 @@ export default {
             case 'snow': return 'https://i.imgur.com/0BHwVWb.png'
             case 'wind': return 'https://i.imgur.com/vNlETtj.png'            
         }
-        return ''
+        return 'empty.png'
     },
     getHourTimezoneMomentTz: function(city) {
         return moment().tz(city).format("HH:mm");
     },
-    getHourTimezone(offset) {
+    getHourTimezone: function(offset) {
         /** from: http://stackoverflow.com/questions/8207655/how-to-get-time-of-specific-timezone-using-javascript */        
         var d = new Date();
         var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
         var nd = new Date(utc + (3600000*offset)).toLocaleString();
         return nd.substring(nd.indexOf(':')-2)
-    }   
+    },
+    // lat Lng from redis
+    getDataCiudad: function(ciudad: string) {
+        return httpClient.get("/api/redis/getLatLng/" + ciudad).then( res => {
+            console.log(`getStats OK nombre=${ciudad} lat=${res.data.lat} lng=${res.data.lng}`)
+            this.getForecast(res.data)
+        }).catch(err => {
+            console.log('Error en /api/redis/getLatLng/ : ' +err)
+        })
+    },
+    // Forecast info from forecast.io
+    getForecast: function(data) {
+        return httpClient.get('/api/forecast/getTimeTemp/' + data.lat +"/" + data.lng)
+            .then( resForecast => {
+                console.log('/forecast.IO ... OK', resForecast.data) 
+                this.setState({
+                    hour: this.getHourTimezone(resForecast.data.offset),
+                    temp: resForecast.data.temp,
+                    summ: resForecast.data.summ,
+                    icon: this.getIconUrlForecastIO(resForecast.data.icon)
+                });             
+            }).catch( err => {
+                console.log('Error en /api/forecast/getTimeTemp/ : ' +err);
+                this.setState({error: err})
+            });
+    }
 }
