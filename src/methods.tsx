@@ -2,6 +2,7 @@ import moment from "moment-timezone";
 import axios from "axios";
 
 const httpClient = axios.create({
+    baseURL: 'http://localhost:41072',
     timeout: 2500,
     headers: { Accept: 'application/json' }  
 })
@@ -35,7 +36,7 @@ export default {
     },
     // lat Lng from redis
     getDataCiudad: function(ciudad: string) {
-        return httpClient.get("/api/redis/getLatLng/" + ciudad).then( res => {
+        return axios.get("/api/redis/getLatLng/" + ciudad).then( res => {
             console.log(`getStats OK nombre=${ciudad} lat=${res.data.lat} lng=${res.data.lng}`)
             this.getForecast(res.data)
         }).catch(err => {
@@ -47,15 +48,17 @@ export default {
         return httpClient.get('/api/forecast/getTimeTemp/' + data.lat +"/" + data.lng)
             .then( resForecast => {
                 console.log('/forecast.IO ... OK', resForecast.data) 
-                this.setState({
+                return {
                     hour: this.getHourTimezone(resForecast.data.offset),
                     temp: resForecast.data.temp,
                     summ: resForecast.data.summ,
                     icon: this.getIconUrlForecastIO(resForecast.data.icon)
-                });             
-            }).catch( err => {
+                }  
+            })
+            .catch( err => {
                 console.log('Error en /api/forecast/getTimeTemp/ : ' +err);
-                this.setState({error: err})
+                //this.setState({error: err})
+                return err
             });
     }
 }
