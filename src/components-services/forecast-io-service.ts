@@ -1,10 +1,11 @@
 import axios from "axios"
 import etcService from './etc-service'
 
-const httpClient = axios.create(etcService.axiosConfig)
+const httpClient = axios.create(etcService.axiosConfig())
 
 export default {
-    getForecast: function(data: any) {
+    /** Retorna axios Promise con un objeto forecastIO */
+    getForecast: function(data: any): Promise<any> {
         if(!data) return
         return httpClient.get('/api/forecast/getTimeTemp/' + data.lat +"/" + data.lng)
             .then( resForecast => {

@@ -1,8 +1,18 @@
+// import { AxiosRequestConfig } from 'axios'
+
+const axiosConfig = {
+    baseURL: 'http://localhost:41072',
+    timeout: 4000,
+    headers: { Accept: 'application/json' }  
+}
+
 export default {
-    axiosConfig: {
+    axiosConfig: function() {
+        return {
             baseURL: 'http://localhost:41072',
             timeout: 4000,
-            headers: { Accept: 'application/json' }  
+            headers: { Accept: 'application/json' }
+        }
     },
     getHourTimezone: function(offset) {
         /** from: http://stackoverflow.com/questions/8207655/how-to-get-time-of-specific-timezone-using-javascript */        
