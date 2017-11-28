@@ -1,11 +1,8 @@
 import axios from "axios";
 import forecastService from './forecast-io-service'
+import etcServices from './etc-service'
 
-const httpClient = axios.create({
-    baseURL: 'http://localhost:41072',
-    timeout: 2500,
-    headers: { Accept: 'application/json' }  
-})
+const httpClient = axios.create(etcServices)
 
 export default {
     // lat Lng from redis
