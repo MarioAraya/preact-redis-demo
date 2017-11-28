@@ -4,9 +4,11 @@
   "description": "Work trial para AcidLabs. Usando Preact+Redis+Typescript+AWS",
   "main": "index.js",
   "dependencies": {
+    "@types/jquery": "^3.2.16",
     "axios": "^0.16.1",
     "cors": "^2.8.3",
     "express": "^4.15.2",
+    "jquery": "^3.2.1",
     "moment-timezone": "^0.5.13",
     "nodemon": "*",
     "preact": "^8.1.0",
@@ -20,8 +22,10 @@
   "devDependencies": {
     "@types/chai": "^4.0.5",
     "@types/mocha": "^2.2.44",
+    "@types/sinon": "^4.0.0",
     "chai": "^4.1.2",
     "mocha": "^4.0.1",
+    "sinon": "^4.1.2",
     "ts-node": "^3.3.0"
   },
   "scripts": {
