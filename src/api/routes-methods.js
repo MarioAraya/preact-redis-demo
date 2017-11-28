@@ -18,8 +18,6 @@ exports.redisConnect = function(){
 
 // Primer request del flujo, obtiene [Lat,Lng] desde google o desde redis
 exports.redisGetLatLng = function(ciudad, responseExpress) {
-    console.log('redisGetLatLng() called !')
-    
     let self = this
     redisClient.hgetall(ciudad, function(err, obj) {
         if (err) {
@@ -59,7 +57,6 @@ exports.saveLatLngEnRedis = function(keyCiudad, jsonLatLng, responseExpress) {
 
 // Obtiene LatLng de redis y retorna la response [lat, lng]  
 exports.getLatLngRedis = function(keyCiudad, responseExpress) {
-    console.log('getLatLng de redis...' +keyCiudad)
     redisClient.hgetall(keyCiudad, function(err, result){
         if (err) { 
             console.log('getLanLng Error: ' +err)
@@ -69,7 +66,7 @@ exports.getLatLngRedis = function(keyCiudad, responseExpress) {
             'lat': result.lat,
             'lng': result.lng
         }
-        console.log('getLatLng de redis...OK ' +objLatLng)
+        console.log(`getLatLng de redis ${keyCiudad}...OK ` +JSON.stringify( objLatLng ))
         responseExpress.json(objLatLng);
     });
 }
@@ -81,7 +78,6 @@ exports.getDataForecast = function(urlForecastIO, responseExpress) {
         throw new Error('How unfortunate! The API Request Failed')        
     }
 
-    console.log('getDataForecast OK') 
     // Normal flow ( 90% )
     return request.get(urlForecastIO, (error, response, body) => {
         if (error) {
@@ -89,6 +85,7 @@ exports.getDataForecast = function(urlForecastIO, responseExpress) {
             return responseExpress.sendStatus(500).send(error);
         }
         let resObj = JSON.parse(body);
+        console.log('resObj.currently.icon: ' +resObj.currently.icon)
         let responseForecast = {
             tzone: resObj.timezone,
             time: resObj.currently.time,
@@ -97,7 +94,7 @@ exports.getDataForecast = function(urlForecastIO, responseExpress) {
             icon: resObj.currently.icon,
             offset: resObj.offset
         }
-        console.log('getDataForecast ... response OK')            
+        console.log('getDataForecast ... response OK', JSON.stringify( responseForecast ))
         return responseExpress.send(responseForecast)
     })
 }
