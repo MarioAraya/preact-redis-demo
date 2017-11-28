@@ -1,8 +1,8 @@
 import { h, Component } from "preact";
-import methods from '../methods'
+import redisService from '../components-services/redis-service'
 
 export interface ICityProps {
-    nombre?: string;
+    nombreCiudad?: string;
 }
 
 export default class CityStats extends Component<ICityProps, any> {
@@ -18,21 +18,33 @@ export default class CityStats extends Component<ICityProps, any> {
         this.btnClick = this.btnClick.bind(this);
 
         // Se hace click automáticamente al instanciar el componente
-        this.btnClick(this.props.nombre);
+        this.btnClick();
     }
     
-    btnClick(props) {
-        methods.getDataCiudad(this.props.nombre)
+    btnClick() {
+        redisService.getDataCiudad(this.props.nombreCiudad)
+            .then( res => {
+                this.setState({
+                    temp: res.temp,
+                    hour: res.hour,
+                    summ: res.summ,
+                    icon: res.icon,
+                    error: res.error
+                })
+            })
+            .catch( err => {
+                console.error(`Error al obtener la data de la ciudad ${this.props.nombreCiudad}: ` + err)
+            })
     }
 
     render (props): any {
-        let { nombre } = this.props;
+        let { nombreCiudad } = this.props;
         let { hour, temp, icon, summ } = this.state;
         return (
             <button class="btnForecast btn btn-primary" type="button" onClick={this.btnClick}>
                 <div class="icon">
                     { icon!=="" && <img src={ icon } alt={ summ } width="60" /> }
-                    <span>{ nombre }</span>
+                    <span>{ nombreCiudad }</span>
                 </div>
                 <div class="badge1">
                     <span class="badge"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> { hour }</span> &nbsp;

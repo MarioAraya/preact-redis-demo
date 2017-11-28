@@ -3,11 +3,11 @@ import CityStats from "./components/CityStats";
 
 render(
     <div class="container">
-        <CityStats nombre="Santiago,CL" />
-        <CityStats nombre="Auckland,NZ" />
-        <CityStats nombre="Zurich,SW" />        
-        <CityStats nombre="Sydney,AU" />
-        <CityStats nombre="London,UK" />
-        <CityStats nombre="Georgia,USA" />
+        <CityStats nombreCiudad="Santiago,CL" />
+        <CityStats nombreCiudad="Auckland,NZ" />
+        <CityStats nombreCiudad="Zurich,SW" />        
+        <CityStats nombreCiudad="Sydney,AU" />
+        <CityStats nombreCiudad="London,UK" />
+        <CityStats nombreCiudad="Georgia,USA" />
     </div>
 , document.querySelector("#app"));
