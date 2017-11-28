@@ -22,7 +22,6 @@ export default {
         return nd.substring(nd.indexOf(':')-2)
     },
     getIconUrlForecastIO: function(icon){
-        console.log('getIconUrlForecastIO called with: '+icon)
         switch (icon) {
             case 'clear-day': return 'https://i.imgur.com/cJDNw72.png'
             case 'clear-night': return 'https://i.imgur.com/Oxt9Dn8.png'
