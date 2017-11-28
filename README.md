@@ -1,4 +1,3 @@
-Esta app muestra un componente renderizado con Preact, y que al clickearlo consume la api de googlemaps en primera instancia y en las posteriores lee desde redis, luego con la data obtenida consume api de Forecast.io para obtener la hora exacta y pronóstico del tiempo.
 
 # Como levantar proyecto
 
@@ -7,9 +6,17 @@ Ejecutar comandos:
 - npm start
 - open "index.html" en el browser
 
+- npm run build
+- npm run test
+
 Con estos comandos instalamos las dependencias y generamos el build webpack.
 Luego arrancamos el servidor y la API backend.
 
+# App description
+Esta app muestra un componente renderizado con Preact, que al tocarlo consume la api de googlemaps en primera instancia y en las posteriores lee desde redisLabs cache, luego con la data obtenida (Geoloc) consume api de Forecast.io para obtener la hora exacta y pronóstico del tiempo.
+
+
+# Misc info
 - [Heroku deploy](https://cryptic-retreat-74751.herokuapp.com/)
 
 Material usado:
