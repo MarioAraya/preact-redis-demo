@@ -25,4 +25,4 @@ Repos:
 - Revisar remotes antes de pushear 'git remote -v'
 - Remover remote con "git remote remove origin' antes de agregar el remote adecuado
 - [Github] git remote add origin https://MarioAraya@github.com/MarioAraya/preact-redis-demo.git
-- [Bitbucket] git remote add origin https://MarioAraya@bitbucket.org/MarioAraya/preact-redis-demo.git
+- [Bitbucket] git remote add origin https://MarioArayaRomero@bitbucket.org/MarioArayaRomero/preact-redis-demo.git
