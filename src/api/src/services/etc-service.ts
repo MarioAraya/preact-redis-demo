@@ -1,9 +1,9 @@
 import * as request from 'request'
 
 export default {        
-    getDataForecast: function(req: any, responseExpress: any) {
+    getDataForecast: function(lat: string, lng: string, responseExpress: any) {
         let urlForecastIO = 'https://api.darksky.net/forecast/a2c2a01fb210cf7c611301c9fa23cdee/' 
-            +req.params.lat +',' +req.params.lng +'?exclude=minutely,hourly,daily,alerts,flags&lang=es&units=auto';
+            +lat +',' +lng +'?exclude=minutely,hourly,daily,alerts,flags&lang=es&units=auto';
 
         //Randomize 10% request will fail
         // if (Math.random(0, 1) < 0.1){

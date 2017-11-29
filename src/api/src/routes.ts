@@ -15,12 +15,12 @@ export default {
         
         // Request googleAPI que retorna coordenadas y las guarda en Redis
         app.get('/api/googlemaps/getLatLng/:ciudad', cors(), function(req, res) {
-            googleService.googleGetLatLng(req, res)
+            googleService.googleGetLatLng(req.params.ciudad, res)
         })
         
         // Obtiene data (hora, temp, etc) desde API de forecast.IO, filtra resultados a solo los necesarios y en español
         app.get('/api/forecast/getTimeTemp/:lat/:lng', cors(), function(req, res){
-            etcService.getDataForecast(req, res)
+            etcService.getDataForecast(req.params.lat, req.params.lng, res)
         })
         
         // Raiz redirige a './public/index.html'

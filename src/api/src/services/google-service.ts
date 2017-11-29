@@ -1,8 +1,8 @@
 import * as request from 'request'
 
 export default {
-    googleGetLatLng(req: any, res: any) {
-        let urlGoogle = 'https://maps.google.com/maps/api/geocode/json?key=AIzaSyAIDZiwD2-lgitBaK_HVsFZMMRjxCsKEug&address=' + req.params.ciudad;
+    googleGetLatLng(ciudad: string, res: any) {
+        let urlGoogle = 'https://maps.google.com/maps/api/geocode/json?key=AIzaSyAIDZiwD2-lgitBaK_HVsFZMMRjxCsKEug&address=' + ciudad;
         return request.get(urlGoogle, (error, response, body) => {
             if (error) {
                 console.log('Error en /api/googlemaps/getLatLng/ : ' +error)
