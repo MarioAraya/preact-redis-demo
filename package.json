@@ -1,20 +1,14 @@
 {
   "name": "preact-redis-demo",
   "version": "1.0.0",
-  "description": "Work trial para AcidLabs. Usando Preact+Redis+Typescript+AWS",
+  "description": "Componente que entrega el tiempo y hora de una ciudad, Preact+Redis+Typescript en client + Node expressAPI server",
   "main": "index.js",
   "dependencies": {
-    "@types/jquery": "^3.2.16",
     "axios": "^0.16.1",
-    "cors": "^2.8.3",
-    "express": "^4.15.2",
     "jquery": "^3.2.1",
     "moment-timezone": "^0.5.13",
     "nodemon": "*",
     "preact": "^8.1.0",
-    "react": "^16.1.1",
-    "redis": "^2.7.1",
-    "request": "^2.81.0",
     "ts-loader": "^2.0.3",
     "typescript": "^2.3.2",
     "webpack": "^2.5.0"
@@ -31,7 +25,7 @@
   "scripts": {
     "prepublish": "npm i",
     "build": "./node_modules/.bin/webpack",
-    "start": "node src/api/index.js",
+    "start": "node src/api/src/index.js",
     "postinstall": "./node_modules/.bin/webpack",
     "test": "mocha --compilers ts:ts-node/register"
   },

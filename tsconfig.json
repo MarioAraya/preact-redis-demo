@@ -15,5 +15,9 @@
         "src/*.tsx",
         "test/*.ts",
         "test/*.tsx"
+    ],
+    "exclude": [
+        "src/api/*.ts",
+        "src/api/*.tsx"
     ]
 }
