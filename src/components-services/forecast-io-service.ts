@@ -9,7 +9,6 @@ export default {
         if(!data) return
         return httpClient.get('/api/forecast/getTimeTemp/' + data.lat +"/" + data.lng)
             .then( resForecast => {
-                console.log('/forecast.IO ... OK', resForecast.data) 
                 return {
                     hour: etcService.getHourTimezone(resForecast.data.offset),
                     temp: resForecast.data.temp,
@@ -19,7 +18,6 @@ export default {
             })
             .catch( err => {
                 console.log('Error en /api/forecast/getTimeTemp/ : ' +err);
-                //this.setState({error: err})
                 return err
             });
     }
