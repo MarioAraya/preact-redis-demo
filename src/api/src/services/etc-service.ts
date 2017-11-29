@@ -17,15 +17,17 @@ export default {
                 console.log('getDataForecast Error en API: '+error)
                 return responseExpress.sendStatus(500).send(error);
             }
+            let responseForecast
             let resObj = JSON.parse(body);
-            let responseForecast = {
-                tzone: resObj.timezone,
-                time: resObj.currently.time,
-                temp: resObj.currently.temperature,
-                summ: resObj.currently.summary,
-                icon: resObj.currently.icon,
-                offset: resObj.offset
-            }
+            if (!resObj.error)
+                responseForecast = {
+                    tzone: resObj.timezone,
+                    time: resObj.currently.time,
+                    temp: resObj.currently.temperature,
+                    summ: resObj.currently.summary,
+                    icon: resObj.currently.icon,
+                    offset: resObj.offset
+                }
             console.log('getDataForecast response: '+ JSON.stringify( responseForecast ))
             return responseExpress.send(responseForecast)
         })
