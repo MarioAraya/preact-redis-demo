@@ -39,19 +39,17 @@ export default {
     redisGetLatLng: function(ciudad: string, responseExpress: any) {
         let self = this
         redisClient.hgetall(ciudad, function(err, obj) {
-            if (err) {
-                console.log('redisGetLatLng() err', err)
-                return err
+            if (err) return err
+            if (obj) {
+                self.getLatLngRedis(ciudad, responseExpress);                
             }
-            else if (!obj) {
+            else {
                 console.log('Ciudad no registrada en redis. Se obtendrá de GoogleMaps para guardarla luego en la cache Redis.')
                 request.get("/api/googlemaps/getLatLng/" + ciudad, (error, response: any, body): any => {
                     console.log('redisGetLatLng OK: ' +JSON.parse(body).lat)
                     if (error) { return response.sendStatus(500); }
                     self.saveLatLngEnRedis(ciudad, body, responseExpress);
-                }); 
-            } else {
-                self.getLatLngRedis(ciudad, responseExpress);
+                })
             }
         });
     },
