@@ -22,6 +22,8 @@ export default class CityStats extends Component<ICityProps, any> {
     }
     
     btnClick() {
+        console.log('this.props.nombreCiudad: ' +this.props.nombreCiudad)
+        
         redisService.getDataCiudad(this.props.nombreCiudad)
             .then( res => {
                 this.setState({
@@ -37,6 +39,13 @@ export default class CityStats extends Component<ICityProps, any> {
             })
     }
 
+    handleChange = (e) => {
+        //this.setState({inputValue: e.target.value});
+        console.log('e.target.value = ' +e.target.value)
+        this.props.nombreCiudad = e.target.value
+    }
+      
+
     render (props): any {
         let { nombreCiudad } = this.props;
         let { hour, temp, icon, summ } = this.state;
@@ -44,7 +53,7 @@ export default class CityStats extends Component<ICityProps, any> {
             <button class="btnForecast btn btn-primary" type="button" onClick={this.btnClick}>
                 <div class="icon">
                     { icon!=="" && <img src={ icon } alt={ summ } width="60" /> }
-                    <span>{ nombreCiudad }</span>
+                    <input type="text" value={ nombreCiudad } onChange={this.handleChange} />
                 </div>
                 <div class="badge1">
                     <span class="badge"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> { hour }</span> &nbsp;

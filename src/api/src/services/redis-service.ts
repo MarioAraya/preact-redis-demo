@@ -44,7 +44,7 @@ export default {
                 self.getLatLngRedis(ciudad, responseExpress);                
             }
             else {
-                console.log('Ciudad no registrada en redis. Se obtendrá de GoogleMaps para guardarla luego en la cache Redis.')
+                console.log(`Ciudad ${ciudad} no registrada en redis. Se obtendrá de GoogleMaps para guardarla luego en la cache Redis.`)
                 request.get("/api/googlemaps/getLatLng/" + ciudad, (error, response: any, body): any => {
                     console.log('redisGetLatLng OK: ' +JSON.parse(body).lat)
                     if (error) { return response.sendStatus(500); }
