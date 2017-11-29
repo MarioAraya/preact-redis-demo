@@ -7,8 +7,6 @@ let app = express()
 
 app.set('port', config.config().app.port);
 
-//app.use('/favicon.ico', express.static('images/favicon.ico'));
-
 routes.SetRoutes(app);
 
 app.listen(app.get('port'), function() {
