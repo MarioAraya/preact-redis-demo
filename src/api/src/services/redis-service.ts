@@ -9,7 +9,7 @@ var redisClient = redis.createClient(config.config().redis.port, config.config()
 
 export default {
     // Obtiene LatLng de redis y retorna la response [lat, lng]  
-    getLatLngRedis: function(keyCiudad: string, responseExpress: any) {
+    getLatLngRedis(keyCiudad: string, responseExpress: any) {
         redisClient.hgetall(keyCiudad, function(err, result){
             if (err) { 
                 console.log('getLanLng Error: ' +err)
@@ -24,7 +24,7 @@ export default {
         });
     },
 
-    redisConnect: function(){
+    redisConnect(){
         redisClient.on('connect', function(err) {
             if(err) console.log('_redisConnect() error_ :', err)
             console.log('Redis connected...')
@@ -36,7 +36,7 @@ export default {
     },
     
     // Primer request del flujo, obtiene [Lat,Lng] desde google o desde redis
-    redisGetLatLng: function(ciudad: string, responseExpress: any) {
+    getCoordenadasRedis(ciudad: string, responseExpress: any) {
         let self = this
         redisClient.hgetall(ciudad, function(err, obj) {
             if (err) return err
@@ -45,17 +45,20 @@ export default {
             }
             else {
                 console.log(`Ciudad ${ciudad} no registrada en redis. Se obtendrá de GoogleMaps para guardarla luego en la cache Redis.`)
-                request.get("/api/googlemaps/getLatLng/" + ciudad, (error, response: any, body): any => {
-                    console.log('redisGetLatLng OK: ' +JSON.parse(body).lat)
-                    if (error) { return response.sendStatus(500); }
-                    self.saveLatLngEnRedis(ciudad, body, responseExpress);
-                })
+                responseExpress.json(
+                    request.get("/api/googlemaps/getLatLng/" + ciudad, (error, response: any, body): any => {
+                        console.log('getCoordenadasRedis OK: ' +JSON.parse(body).lat)
+                        return body
+                        // if (error) { return response.sendStatus(500); }
+                        // self.saveLatLngEnRedis(ciudad, body, responseExpress);
+                    })
+                )
             }
         });
     },
     
     // Guardar en redis: HMSET Ciudad,[lat,lng]
-    saveLatLngEnRedis: function(keyCiudad: string, jsonLatLng: string, responseExpress: any) {
+    saveLatLngEnRedis(keyCiudad: string, jsonLatLng: string, responseExpress: any) {
         console.log('saveLatLngEnRedis: ' + jsonLatLng)    
         let objLatLng = [
             'lat', JSON.parse(jsonLatLng).lat,
@@ -72,7 +75,7 @@ export default {
         })
     },
 
-    redisSaveError: function(msg: any, responseExpress: any){
+    redisSaveError(msg: any, responseExpress: any){
         console.log('redisSaveError')
         redisClient.hmset("api.errors", [
             new Date(), msg

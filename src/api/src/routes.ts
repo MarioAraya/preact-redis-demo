@@ -10,17 +10,21 @@ export default {
     SetRoutes(app: any) {
         // Request redis que obtiene Lat Lng según :ciudad 
         app.get('/api/redis/getLatLng/:ciudad', cors(), function(req, res, next) {
-            redisService.redisGetLatLng(req.params.ciudad, res)
+            return redisService.getCoordenadasRedis(req.params.ciudad, res)
         })
         
         // Request googleAPI que retorna coordenadas y las guarda en Redis
         app.get('/api/googlemaps/getLatLng/:ciudad', cors(), function(req, res) {
-            googleService.googleGetLatLng(req.params.ciudad, res)
+            return googleService.getCoordenadas(req.params.ciudad)
+                    .then( res => res)
+                    .catch( err => err)
         })
         
         // Obtiene data (hora, temp, etc) desde API de forecast.IO, filtra resultados a solo los necesarios y en español
         app.get('/api/forecast/getTimeTemp/:lat/:lng', cors(), function(req, res){
-            etcService.getDataForecast(req.params.lat, req.params.lng, res)
+            return etcService.getDataForecast(req.params.lat, req.params.lng)
+                    .then( res => { console.log('res:', res)})
+                    .catch( err => { console.log('err:', err)})
         })
         
         // Raiz redirige a './public/index.html'

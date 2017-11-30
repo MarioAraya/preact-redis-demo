@@ -1,10 +1,3 @@
-// import { AxiosRequestConfig } from 'axios'
-
-const axiosConfig = {
-    baseURL: 'http://localhost:41072',
-    timeout: 4000,
-    headers: { Accept: 'application/json' }  
-}
 
 export default {
     axiosConfig: function() {

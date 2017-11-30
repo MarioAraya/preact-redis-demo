@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node src/index.js",
-    "test": "tsc && mocha --compilers ts:ts-node/register"    
+    "test": "tsc && mocha --compilers ts:ts-node/register"
   },
   "author": "",
   "license": "ISC",
@@ -19,7 +19,8 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "redis": "^2.8.0",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "ts-node": "^3.3.0"
   },
   "devDependencies": {
     "@types/chai": "^4.0.5",
