@@ -10,21 +10,17 @@ export default class CityStats extends Component<ICityProps, any> {
         super(props);
         this.state = {
             temp: 0,
-            hour: "00:00",
-            summ: "",
-            icon: "images/loading.svg",
-            error: ""
+            hour: '00:00',
+            summ: '',
+            icon: 'images/loading.svg',
+            error: '',
+            ciudad: this.props.nombreCiudad
         };
         this.btnClick = this.btnClick.bind(this);
-
-        // Se hace click automáticamente al instanciar el componente
-        this.btnClick();
     }
     
     btnClick() {
-        console.log('this.props.nombreCiudad: ' +this.props.nombreCiudad)
-        
-        redisService.getDataCiudad(this.props.nombreCiudad)
+        redisService.getDataCiudad(this.state.ciudad)
             .then( res => {
                 this.setState({
                     temp: res.temp,
@@ -35,25 +31,23 @@ export default class CityStats extends Component<ICityProps, any> {
                 })
             })
             .catch( err => {
-                console.error(`Error al obtener la data de la ciudad ${this.props.nombreCiudad}: ` + err)
+                console.error(`Error al obtener la data de la ciudad ${this.state.ciudad}: ` + err)
             })
     }
 
     handleChange = (e) => {
-        //this.setState({inputValue: e.target.value});
-        console.log('e.target.value = ' +e.target.value)
-        this.props.nombreCiudad = e.target.value
+        this.setState({
+            ciudad: e.target.value
+        });
     }
       
-
     render (props): any {
-        let { nombreCiudad } = this.props;
-        let { hour, temp, icon, summ } = this.state;
+        let { hour, temp, icon, summ, ciudad } = this.state;
         return (
-            <button class="btnForecast btn btn-primary" type="button" onClick={this.btnClick}>
+            <button class="btnForecast btn btn-primary" type="button">
                 <div class="icon">
-                    { icon!=="" && <img src={ icon } alt={ summ } width="60" /> }
-                    <input type="text" value={ nombreCiudad } onChange={this.handleChange} />
+                    { icon!=="" && <img onClick={this.btnClick} src={ icon } alt={ summ } width="60" /> }
+                    <input type="text" value={ ciudad } onChange={this.handleChange} />
                 </div>
                 <div class="badge1">
                     <span class="badge"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> { hour }</span> &nbsp;
