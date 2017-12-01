@@ -5,10 +5,10 @@ import * as cors from 'cors'
 
 let app = express()
 
-app.set('port', constants.appApiPort);
+app.set('port', constants.appApiPort)
 
-routes.SetRoutes(app);
+routes.SetRoutes(app)
 
 app.listen(app.get('port'), function() {
-  console.log('Servidor escuchando en puerto ', app.get('port'));
+  console.log('Servidor escuchando en puerto ', app.get('port'))
 })
