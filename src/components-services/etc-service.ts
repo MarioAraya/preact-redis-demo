@@ -1,20 +1,14 @@
+import axios from 'axios'
 
 export default {
-    axiosConfig: function() {
-        return {
-            baseURL: 'http://localhost:41072',
-            timeout: 4000,
-            headers: { Accept: 'application/json' }
-        }
-    },
-    getHourTimezone: function(offset) {
+    getHourTimezone(offset) {
         /** from: http://stackoverflow.com/questions/8207655/how-to-get-time-of-specific-timezone-using-javascript */        
         var d = new Date();
         var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
         var nd = new Date(utc + (3600000*offset)).toLocaleString();
         return nd.substring(nd.indexOf(':')-2)
     },
-    getIconUrlForecastIO: function(icon){
+    getIconUrlForecastIO(icon){
         switch (icon) {
             case 'clear-day': return 'https://i.imgur.com/cJDNw72.png'
             case 'clear-night': return 'https://i.imgur.com/Oxt9Dn8.png'

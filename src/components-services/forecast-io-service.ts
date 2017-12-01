@@ -1,19 +1,18 @@
 import axios from "axios"
 import etcService from './etc-service'
-
-const httpClient = axios.create(etcService.axiosConfig())
+import * as constants from './constants'
 
 export default {
     /** Retorna axios Promise con un objeto forecastIO */
-    getForecast: function(data: any): Promise<any> {
+    getForecast(data: any): Promise<any> {
         if(!data) return
-        return httpClient.get('/api/forecast/getTimeTemp/' + data.lat +"/" + data.lng)
+        return constants.httpClient.get('/api/forecast/getTimeTemp/' + data.lat +"/" + data.lng)
             .then( resForecast => {
                 return {
-                    hour: etcService.getHourTimezone(resForecast.data.offset),
+                    hour: this.etcService.getHourTimezone(resForecast.data.offset),
                     temp: resForecast.data.temp,
                     summ: resForecast.data.summ,
-                    icon: etcService.getIconUrlForecastIO(resForecast.data.icon)
+                    icon: this.etcService.getIconUrlForecastIO(resForecast.data.icon)
                 }  
             })
             .catch( err => {

@@ -22,9 +22,9 @@ export default {
         
         // Obtiene data (hora, temp, etc) desde API de forecast.IO, filtra resultados a solo los necesarios y en español
         app.get('/api/forecast/getTimeTemp/:lat/:lng', cors(), function(req, res){
-            return etcService.getDataForecast(req.params.lat, req.params.lng)
-                    .then( res => { console.log('res:', res)})
-                    .catch( err => { console.log('err:', err)})
+            etcService.getDataForecast(req.params.lat, req.params.lng)
+                .then( res => { console.log('res:', res) })
+                .catch( err => { console.log('err:', err) })
         })
         
         // Raiz redirige a './public/index.html'

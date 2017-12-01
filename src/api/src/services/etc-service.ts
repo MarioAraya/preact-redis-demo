@@ -1,14 +1,6 @@
 import axios from 'axios'
 import etcService from './etc-service'
-
-export const googleApiUrl = 'https://maps.google.com/maps/api/geocode/json?key=AIzaSyAIDZiwD2-lgitBaK_HVsFZMMRjxCsKEug&address='
-export const axiosConfig = {
-    baseURL: 'http://localhost:41072',
-    timeout: 5000,
-    headers: { Accept: 'application/json' }
-}
-
-const httpClient = axios.create(this.axiosConfig)
+import * as constants from './constants'
 
 export default {  
     forecastApiUrl(lat, lng) {
@@ -22,7 +14,7 @@ export default {
         // }
 
         // Normal flow ( 90% )
-        return httpClient.get(this.forecastApiUrl(lat, lng))
+        return constants.httpClient.get(this.forecastApiUrl(lat, lng))
                 .then( apiResponse => {
                     console.log('apiResponse.status', apiResponse.status)
                     let responseForecast
