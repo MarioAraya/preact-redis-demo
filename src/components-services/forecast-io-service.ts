@@ -5,7 +5,7 @@ import * as constants from './constants'
 export default {
     /** Retorna axios Promise con un objeto forecastIO */
     getForecast(data: any): Promise<any> {
-        if(!data) return
+        if(!data || !data.lat || data.lng) return
         return constants.httpClient.get('/api/forecast/getTimeTemp/' + data.lat +"/" + data.lng)
             .then( resForecast => {
                 return {
