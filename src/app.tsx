@@ -8,6 +8,6 @@ render(
         <CityStats nombreCiudad="Zurich,SW" />        
         <CityStats nombreCiudad="Sydney,AU" />
         <CityStats nombreCiudad="London,UK" />
-        <CityStats nombreCiudad="Georgia,USA" />
+        <CityStats nombreCiudad="Malloco,CL" />
     </div>
 , document.querySelector("#app"));
