@@ -13,10 +13,10 @@ export default {
                 // If !emptyObject
                 if (!objCoordenadas || JSON.stringify(objCoordenadas) === "{}") {
                     console.log(`Ciudad ${ciudad} no registrada en redis. Se obtendrá de GoogleMaps para guardarla luego en la cache Redis.`)
-                    googleService.getCoordenadas(ciudad).then( resGoogleApi => {
+                    googleService.getCoordenadas(ciudad)
+                    .then( resGoogleApi => {
                         console.log('getCoordenadasGoogleApi OK: ' + JSON.stringify(resGoogleApi))
                         this.saveLatLngEnRedis(ciudad, resGoogleApi.lat, resGoogleApi.lng)
-
                         return resGoogleApi;
                     })
                     .catch ( errGoogleApi => console.log('__ERROR en getCoordenadasRedis() ', errGoogleApi))
