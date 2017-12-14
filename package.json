@@ -21,7 +21,7 @@
     "ts-node": "^3.3.0"
   },
   "scripts": {
-    "install": "npm i && cd src/api && npm i",
+    //"install": "npm i && cd src/api && npm i",
     "build": "tsc && ./node_modules/.bin/webpack",
     "build-server": "cd src/api && npm run build",
     "start": "node src/api/src/index.js",
