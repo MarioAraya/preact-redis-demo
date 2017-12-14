@@ -3,6 +3,14 @@
 npm-debug.log
 /public/bundle.js
 /public/bundle.js.map
+/src/*.js
+/src/*.map
 /src/api/node_modules
 /src/api/**/*.js
 /src/api/**/*.map
+/src/components/**/*.js
+/src/components/**/*.map
+/src/components-services/**/*.js
+/src/components-services/**/*.map
+/test/*.js
+/test/*.map

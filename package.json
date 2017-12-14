@@ -22,7 +22,7 @@
   },
   "scripts": {
     "install": "npm i && cd src/api && npm i",
-    "build": "./node_modules/.bin/webpack",
+    "build": "tsc && ./node_modules/.bin/webpack",
     "build-server": "cd src/api && npm run build",
     "start": "node src/api/src/index.js",
     "postinstall": "./node_modules/.bin/webpack",

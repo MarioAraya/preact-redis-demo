@@ -22,13 +22,15 @@ export default class CityStats extends Component<ICityProps, any> {
     btnClick() {
         redisService.getDataCiudad(this.state.ciudad)
             .then( res => {
-                this.setState({
-                    temp: res.temp,
-                    hour: res.hour,
-                    summ: res.summ,
-                    icon: res.icon,
-                    error: res.error
-                })
+                if (res) {
+                    this.setState({
+                        temp: res.temp,
+                        hour: res.hour,
+                        summ: res.summ,
+                        icon: res.icon,
+                        error: res.error
+                    })
+                }
             })
             .catch( err => {
                 console.error(`Error al obtener la data de la ciudad ${this.state.ciudad}: ` + err)
