@@ -9,22 +9,22 @@ redisService.redisConnect();
 export default {
     SetRoutes(app: any) {
         // Request redis que obtiene Lat Lng según :ciudad 
-        app.get('/api/redis/getLatLng/:ciudad', cors(), function(req, res, next) {
-            return redisService.getCoordenadasRedis(req.params.ciudad)
-                .then( result => res.send(result) )  
+        app.get('/api/redis/getLatLng/:ciudad', cors(), function(req, res) {
+            redisService.getCoordenadasRedis(req.params.ciudad)
+                .then( result => res.send(result) )                
                 .catch( err => err)      
         })
         
         // Request googleAPI que retorna coordenadas y las guarda en Redis
         app.get('/api/googlemaps/getLatLng/:ciudad', cors(), function(req, res) {
-            return googleService.getCoordenadas(req.params.ciudad)
+            googleService.getCoordenadas(req.params.ciudad)
                 .then( result => res.send(result) )  
                 .catch( err => err)
         })
         
         // Obtiene data (hora, temp, etc) desde API de forecast.IO, filtra resultados a solo los necesarios y en español
         app.get('/api/forecast/getTimeTemp/:lat/:lng', cors(), function(req, res){
-            return etcService.getDataForecast(req.params.lat, req.params.lng)
+            etcService.getDataForecast(req.params.lat, req.params.lng)
                 .then( result => res.send(result) )  
                 .catch( err => { console.log('err:', err) })
         })
