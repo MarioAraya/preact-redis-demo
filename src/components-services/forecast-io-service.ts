@@ -5,14 +5,13 @@ import * as constants from './constants'
 export default {
     /** Retorna axios Promise con un objeto forecastIO */
     getForecast(data: any): Promise<any> {
-        if(!data || !data.lat || data.lng) return
         return constants.httpClient.get('/api/forecast/getTimeTemp/' + data.lat +"/" + data.lng)
             .then( resForecast => {
                 return {
-                    hour: this.etcService.getHourTimezone(resForecast.data.offset),
+                    hour: etcService.getHourTimezone(resForecast.data.offset),
                     temp: resForecast.data.temp,
                     summ: resForecast.data.summ,
-                    icon: this.etcService.getIconUrlForecastIO(resForecast.data.icon)
+                    icon: etcService.getIconUrlForecastIO(resForecast.data.icon)
                 }  
             })
             .catch( err => {
