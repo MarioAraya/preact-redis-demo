@@ -3,6 +3,7 @@
     margin: 5px;
     text-align: right;
     position: relative;
+    cursor: default !important;
 }
 
 .btnForecast img {
@@ -24,4 +25,5 @@
 
 .btnForecast img {
     float: left;
+    cursor: pointer;
 }
