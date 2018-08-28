@@ -6,7 +6,7 @@ export default {
     getDataCiudad: function(ciudad: string): Promise<any> {
         return constants.httpClient.get("/api/redis/getLatLng/" + ciudad)
             .then( res => {
-                if (!res) {
+                if (!res || !res.data.lat || !res.data.lng) {
                     console.log('No se encontró datos para ' + ciudad)
                     return
                 }

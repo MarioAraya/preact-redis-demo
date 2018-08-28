@@ -1,5 +1,3 @@
-import axios from 'axios'
-import etcService from './etc-service'
 import * as constants from './constants'
 
 export default {  
@@ -35,7 +33,7 @@ export default {
                     return responseForecast
                 })
                 .catch( err => {
-                    console.log('__forecastApiUrl err:', err)
+                    console.log('__forecastApiUrl error__')
                 })
     }
 }
