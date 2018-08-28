@@ -1,27 +1,22 @@
 import axios from 'axios'
-//import * as redis from 'redis'
+import * as Redis from 'ioredis'
 
 export const appApiPort = 41072
-export const googleApiUrl = 'https://maps.google.com/maps/api/geocode/json?key=AIzaSyAIDZiwD2-lgitBaK_HVsFZMMRjxCsKEug&address='
+export const googleApiUrl = 'https://maps.google.com/maps/api/geocode/json?key=AIzaSyBUva5tosidc6-iWE8NH7GjW3C06ERAFmI&address='
 export const axiosConfig = {
     baseURL: 'http://localhost:41072',
     timeout: 5000,
     headers: { Accept: 'application/json' }
 }
 export const redisConfig = {
-    host: 'redis-19812.c10.us-east-1-4.ec2.cloud.redislabs.com',
-    port: 19812        
+    host: 'redis-16986.c62.us-east-1-4.ec2.cloud.redislabs.com',
+    port: 16986,
+    password: 'FgZQ6BUNiSQs2r2Q2QSalmxtDOywteJX',
+    db: 0
 }
-
 
 // Cliente axios
 export const httpClient = axios.create(this.axiosConfig)
 
-// Cliente redis server "redisLabs"
-//export const redisClient = redis.createClient(this.redisConfig.port, this.redisConfig.host);
-// Cliente redis server "localhost 127.0.0.1:6379"
-//export const redisClient = redis.createClient(6379);
-
-// Redislabs, ioredis
-import * as Redis from 'ioredis'
-export const redis = new Redis(this.redisConfig.port, this.redisConfig.host);
+// Cliente redis (redislabs)
+export const redis = new Redis(this.redisConfig)
