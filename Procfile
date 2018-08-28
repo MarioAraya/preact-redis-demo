@@ -1,0 +1,1 @@
+web: node ./src/api/src/index.js
