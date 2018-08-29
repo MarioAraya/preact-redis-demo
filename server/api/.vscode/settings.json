@@ -1,0 +1,7 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/2042b47b-ff15-4e68-a0e6-541b2733263d/resourceGroups/appsvc_rg_linux_eastus/providers/Microsoft.Web/sites/api-forecast-redis",
+    "appService.deploySubpath": ""
+}
