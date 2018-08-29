@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const axiosConfig = {
-    baseURL: 'http://localhost:41072',
+    baseURL: 'https://api-forecast-redis.azurewebsites.net',
     timeout: 5000,
     headers: { Accept: 'application/json' }
 }
