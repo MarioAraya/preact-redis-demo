@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "tsc && node ./src/index.js",
+    "start": "node ./src/index.js",
+    "postinstall": "tsc",
     "test": "tsc && mocha --compilers ts:ts-node/register"
   },
   "engines": {
-    "node": "6.9.1"
+    "node": "6.9.1",
+    "npm": "3.10.8"
   },
   "author": "",
   "license": "ISC",
