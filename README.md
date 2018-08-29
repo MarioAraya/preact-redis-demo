@@ -1,26 +1,33 @@
+# Descripción
+Esta app muestra un componente con *Preact* (React), que al clickearlo consume la api de *googlemaps*, en primera instancia, para obtener la geoloc y luego escribe/lee desde la cache Redis (redislabs) y consume la API de *Forecast.io* para obtener la hora exacta y pronóstico del tiempo.
 
 # Como levantar proyecto
 
 Ejecutar comandos: 
+```
 - npm install
 - npm start
-- open "index.html" en el browser
+luego open "index.html" en el browser
 
 - npm run build
+- npm run build-server
+para publicar
+
 - npm run test
+para correr tests
+```
 
 Con estos comandos instalamos las dependencias y generamos el build webpack.
 Luego arrancamos el servidor y la API backend.
 
-# App description
-Esta app muestra un componente renderizado con Preact, que al tocarlo consume la api de googlemaps en primera instancia y en las posteriores lee desde redisLabs cache, luego con la data obtenida (Geoloc) consume api de Forecast.io para obtener la hora exacta y pronóstico del tiempo.
 
 
-# Misc info
-- [Heroku deploy](https://cryptic-retreat-74751.herokuapp.com/)
+# DEMO online
+- [DEMO site deployed on Firebase](https://fir-react-redis-temperatura.firebaseapp.com/) (this is consuming backend API from Azure)
+- [DEMO api deployed on MS Azure](https://api-forecast-redis.azurewebsites.net/api/redis/getLatLng/London,UK)
 
-Material usado:
-- [HelloWorld - Preact+Typescript+WebpackSimple](https://medium.com/@shakyShane/hello-world-with-preact-jsx-typescript-6d70cf2ebf01) - Tutorial HelloWorld con Preact y Typescript
+# Material usado:
+- [HelloWorld con Preact+Typescript+WebpackSimple](https://medium.com/@shakyShane/hello-world-with-preact-jsx-typescript-6d70cf2ebf01) - Tutorial ultra básico HelloWorld con Preact y Typescript
 - [Redis instalación](https://github.com/MSOpenTech/redis/releases) - Para montar servidor local
 - [Redis Labs](https://redislabs.com)  - Para usar instancia en la nube de Redis
 - Axios - Para request en frontend
