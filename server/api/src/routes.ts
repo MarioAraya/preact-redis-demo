@@ -33,7 +33,7 @@ export default {
         let publicDir = __dirname.replace('src/api/src', 'public')
         app.use(express.static(publicDir));
         app.get('/*', function(req, res){
-            res.sendFile(publicDir + '/index.html');
+            res.send({ 'test': test });
         });
         
         //app.use('/favicon.ico', express.static(publicDir + '/images/favicon.ico'));        
