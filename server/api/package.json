@@ -4,10 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
     "start": "node ./src/index.js",
-    "postinstall": "tsc",
-    "test": "tsc && mocha --compilers ts:ts-node/register"
+    "test": "mocha --compilers ts:ts-node/register"
   },
   "engines": {
     "node": "6.9.1",
